@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using UnityEngine.Android;
 
 public class AudioInputDetection : MonoBehaviour
@@ -17,7 +16,13 @@ public class AudioInputDetection : MonoBehaviour
     {
         if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
         {
-            Permission.RequestUserPermission(Permission.Microphone);
+            // Luca: ShouldShowRequest doet dus die message die je wat meer info geeft voor WAAROM, gebruik deze inplaats van de normale request
+            if (Permission.ShouldShowRequestPermissionRationale(Permission.Microphone))
+            {
+                Debug.Log("This super cool awesome game uses your microphone for the movement, please allow.");
+            }
+
+            // Permission.RequestUserPermission(Permission.Microphone);
         }
 
         if (Microphone.devices.Length > 0)
@@ -29,5 +34,25 @@ public class AudioInputDetection : MonoBehaviour
         {
             Debug.LogWarning("No microphone device found.");
         }
+    }
+
+    // Zorgt ervoor dat de audio
+    public float GetLoudness()
+    {
+        if (microphoneClip == null) return 0f;
+
+        int sampleWindow = 128;
+        int micPosition = Microphone.GetPosition(microphoneDevice) - sampleWindow;
+        if (micPosition < 0) return 0f;
+
+        float[] samples = new float[sampleWindow];
+        microphoneClip.GetData(samples, micPosition);
+
+        float loudness = 0f;
+        foreach (float sample in samples)
+            
+        loudness += Mathf.Abs(sample);
+
+        return loudness / sampleWindow;
     }
 }
