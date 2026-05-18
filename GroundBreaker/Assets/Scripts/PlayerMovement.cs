@@ -1,6 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -16,26 +16,43 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 gyroInput;
     private Vector3 rotation;
     public float sideSpeed;
+    public float maxVelocity;
+    private Quaternion gyroOffset = Quaternion.identity;
+
+    void Awake()
+    {
+        Input.gyro.enabled = true;
+        Input.compensateSensors = true;
+    }
 
     public void Start()
     {
         rotation = Vector3.zero;
 
-        Debug.Log(SystemInfo.supportsAccelerometer);
-        Debug.Log(Input.acceleration);
+        Debug.LogWarning(SystemInfo.supportsAccelerometer);
 
-        initialOrientation = Input.gyro.attitude.eulerAngles;
+        // initialOrientation = Input.gyro.attitude.eulerAngles;
         audioInputDetection = GetComponent<AudioInputDetection>();
         audioInputDetection.StartMicrophone();
         rb = GetComponent<Rigidbody2D>();
 
         if (SystemInfo.supportsGyroscope)
         {
-            Input.gyro.enabled = true;
+            StartGyro();
+            Debug.LogWarning("Gyroscope enabled.");
+        }
+        else
+        {
+            Debug.LogWarning("Gyroscope not supported on this device.");
+        }
+
+        if (SystemInfo.supportsAccelerometer)
+        {
+            Debug.LogWarning("Accelerometer enabled.");
         }
     }
 
-    public void FixedUpdate()
+    public void Update()
     {
         MicrophoneMovement();
         GyroscopeMovement();
@@ -43,41 +60,44 @@ public class PlayerMovement : MonoBehaviour
 
     public void GyroscopeMovement()
     {
-        //// Attitude zorgt voor de tilt
-        float tilt = Input.gyro.attitude.eulerAngles.z;
-        //// Onderscheid maken tussen -180 en 180 graden want rekenen
-        if (tilt > 180f) tilt -= 360f;
+        float tilt = Input.acceleration.x;
+        Debug.LogWarning(Input.acceleration);
 
-        //rotation.z = Input.gyro.rotationRateUnbiased.z;
-        //rotation.x = -Input.gyro.rotationRateUnbiased.x;
-        //.attitude = orientation in space
-        //transform.rotation = Input.gyro.attitude;
-
-        //transform.Rotate(rotation.x, 0, rotation.z);
-        Debug.LogWarning($"Rotation: {tilt}");
-
-        // Onderscheidt maken tussen links en rechts voor beweging
-        float horizontalInput = Input.acceleration.z;
-
-
-        if (Mathf.Abs(horizontalInput) > 0.1f)
+        if (Mathf.Abs(tilt) < 0.05f)
         {
-            //rb.linearVelocity = new Vector2(horizontalInput * sideSpeed, rb.linearVelocity.y);
-            rb.AddForce(Vector2.right * horizontalInput * sideSpeed, ForceMode2D.Force);
+            tilt = 0f;
         }
+        
+        rb.linearVelocity = new Vector2(tilt * sideSpeed, rb.linearVelocity.y);
+    }
+
+    private Quaternion GyroToUnity(Quaternion q)
+    {
+        return new Quaternion(q.x, q.y, -q.z, -q.w);
+    }
+
+    IEnumerator StartGyro()
+    {
+        Input.gyro.enabled = true;
+
+        yield return new WaitForSeconds(0.5f);
+
+        Debug.Log(Input.acceleration);
     }
 
     public void MicrophoneMovement()
     {
-#if UNITY_EDITOR
-        if (Keyboard.current.spaceKey.isPressed)
-        {
-            rb.AddForce(Vector2.up * launchSpeed, ForceMode2D.Force);
-        }
-#endif
+//#if UNITY_EDITOR
+//        if (Keyboard.current.spaceKey.isPressed)
+//        {
+//            MobileDebug.Log("Microphone pretends to go brrrrrrrrrr");
+//            rb.AddForce(Vector2.up * launchSpeed, ForceMode2D.Force);
+//        }
+//#endif
 
         if (audioInputDetection)
         {
+            MobileDebug.Log("Microphone go brrrrrrrrrr");
             float loudness = audioInputDetection.GetLoudness();
             Debug.LogWarning($"Loudness: {loudness}"); // Verwijder dit later
 

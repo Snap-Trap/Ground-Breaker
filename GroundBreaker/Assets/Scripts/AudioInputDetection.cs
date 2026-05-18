@@ -21,7 +21,6 @@ public class AudioInputDetection : MonoBehaviour
             {
                 Debug.Log("This super cool awesome game uses your microphone for the movement, please allow.");
             }
-
             // Permission.RequestUserPermission(Permission.Microphone);
         }
 
