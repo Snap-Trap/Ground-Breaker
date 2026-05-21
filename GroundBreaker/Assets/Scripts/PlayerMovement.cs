@@ -12,12 +12,8 @@ public class PlayerMovement : MonoBehaviour
     public float launchSpeed;
 
     // Stuff for the sideways gyroscope movement
-    private Vector3 initialOrientation;
-    private Vector3 gyroInput;
-    private Vector3 rotation;
     public float sideSpeed;
     public float maxVelocity;
-    private Quaternion gyroOffset = Quaternion.identity;
 
     void Awake()
     {
@@ -27,8 +23,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Start()
     {
-        rotation = Vector3.zero;
-
         Debug.LogWarning(SystemInfo.supportsAccelerometer);
 
         // initialOrientation = Input.gyro.attitude.eulerAngles;
@@ -39,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         if (SystemInfo.supportsGyroscope)
         {
             StartGyro();
-            Debug.LogWarning("Gyroscope enabled.");
+            Debug.LogWarning("Gyroscope supported.");
         }
         else
         {
@@ -48,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (SystemInfo.supportsAccelerometer)
         {
-            Debug.LogWarning("Accelerometer enabled.");
+            Debug.LogWarning("Accelerometer supported.");
         }
     }
 
@@ -71,10 +65,10 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = new Vector2(tilt * sideSpeed, rb.linearVelocity.y);
     }
 
-    private Quaternion GyroToUnity(Quaternion q)
-    {
-        return new Quaternion(q.x, q.y, -q.z, -q.w);
-    }
+    //private Quaternion GyroToUnity(Quaternion q)
+    //{
+    //    return new Quaternion(q.x, q.y, -q.z, -q.w);
+    //}
 
     IEnumerator StartGyro()
     {
@@ -99,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
         {
             MobileDebug.Log("Microphone go brrrrrrrrrr");
             float loudness = audioInputDetection.GetLoudness();
-            Debug.LogWarning($"Loudness: {loudness}"); // Verwijder dit later
+            Debug.LogWarning($"Loudness: {loudness}");
 
             if (loudness > loudnessThreshold)
             {
