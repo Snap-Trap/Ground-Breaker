@@ -1,9 +1,14 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public const string SPEED_DATA = "speed";
+
+    private DataStore _store;
+
     // Stuff for the microphone upwards movement
     private AudioInputDetection audioInputDetection;
     private Rigidbody2D rb;
@@ -15,6 +20,9 @@ public class PlayerMovement : MonoBehaviour
     public float sideSpeed;
     public float maxVelocity;
 
+    // Other
+    public float currentVelocity;
+
     void Awake()
     {
         Input.gyro.enabled = true;
@@ -23,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void Start()
     {
+        _store = FindFirstObjectByType<DataStore>();
+
         Debug.LogWarning(SystemInfo.supportsAccelerometer);
 
         // initialOrientation = Input.gyro.attitude.eulerAngles;
@@ -48,6 +58,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void Update()
     {
+        currentVelocity = rb.linearVelocity.magnitude;
+        _store.SetData<float>(SPEED_DATA, currentVelocity);
+
         MicrophoneMovement();
         GyroscopeMovement();
     }
@@ -81,13 +94,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void MicrophoneMovement()
     {
-//#if UNITY_EDITOR
-//        if (Keyboard.current.spaceKey.isPressed)
-//        {
-//            MobileDebug.Log("Microphone pretends to go brrrrrrrrrr");
-//            rb.AddForce(Vector2.up * launchSpeed, ForceMode2D.Force);
-//        }
-//#endif
+#if UNITY_EDITOR
+        if (Keyboard.current.spaceKey.isPressed)
+        {
+            MobileDebug.Log("Microphone pretends to go brrrrrrrrrr");
+            rb.AddForce(Vector2.up * launchSpeed, ForceMode2D.Force);
+        }
+#endif
 
         if (audioInputDetection)
         {
