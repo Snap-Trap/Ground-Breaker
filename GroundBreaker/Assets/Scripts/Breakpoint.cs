@@ -15,7 +15,7 @@ public class Breakpoint : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(_store.GetData<float>(PlayerMovement.SPEED_DATA));
+        // Debug.Log(_store.GetData<float>(PlayerMovement.SPEED_DATA));
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

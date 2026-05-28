@@ -1667,7 +1667,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1198395234
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1739,6 +1739,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41bb09c3cb96d244f86243eb27492ecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Failmenu
+  openMenu:
+    m_Name: Open Menu
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 5dc3d75b-6f94-48fb-9d72-536fa2458511
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 380c2cbc-af00-4aa1-9671-6c7e4870bd4f
+      m_Path: <Keyboard>/q
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Open Menu
+      m_Flags: 0
+    m_Flags: 0
   FailMenuUI: {fileID: 1198395233}
 --- !u!1 &1405278072
 GameObject:

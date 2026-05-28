@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class Failmenu : MonoBehaviour
 {
+    public InputAction openMenu;
+
     public GameObject FailMenuUI;
 
     // Websites pakken dus wrs google
@@ -12,11 +14,31 @@ public class Failmenu : MonoBehaviour
     public static string webplayerQuitURL = "http://google.com";
 #endif
 
+    public void Start()
+    {
+        FailMenuUI.gameObject.SetActive(false);
+    }
+
+    public void Update()
+    {
+        OpenMenu();
+    }
+
     public void OpenMenu()
     {
-        if (Keyboard.current.escapeKey.isPressed)
+        if (FailMenuUI.activeSelf == false)
         {
-            FailMenuUI.gameObject.SetActive(true);
+            if (Keyboard.current.qKey.wasPressedThisFrame)
+            {
+                FailMenuUI.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            if (Keyboard.current.qKey.wasPressedThisFrame)
+            {
+                FailMenuUI.gameObject.SetActive(false);
+            }
         }
     }
 

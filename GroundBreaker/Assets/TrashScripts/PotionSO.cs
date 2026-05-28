@@ -1,0 +1,10 @@
+using System;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "PotionSO", menuName = "Scriptable Objects/PotionSO")]
+public class PotionSO : ScriptableObject
+{
+    public string PotionName;
+    public string PotionDescription;
+    public string PotionRarity;
+}
