@@ -7,6 +7,8 @@ public class Breakpoint : MonoBehaviour
     public GameObject Barrier;
     private DataStore _store;
 
+    public static bool barrierIsBroken;
+
     private void Start()
     {
         Barrier = GameObject.Find("Barrier");
@@ -20,8 +22,9 @@ public class Breakpoint : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (_store.GetData<float>(PlayerMovement.SPEED_DATA) >= RequiredVelocity)
+        if (_store.GetData<float>(PlayerMovement.SPEED_DATA) >= RequiredVelocity || _store.GetData<float>(PlayerMovement.SPEED_DATA) == RequiredVelocity)
         {
+            barrierIsBroken = false;
             Destroy(Barrier);
         }
     }

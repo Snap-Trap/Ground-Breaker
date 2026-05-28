@@ -1,67 +1,39 @@
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
 
-public class Failmenu : MonoBehaviour
+public class FailMenu : MenuManager
 {
-    public InputAction openMenu;
-
     public GameObject FailMenuUI;
 
-    // Websites pakken dus wrs google
-#if UNITY_WEBPLAYER
-    public static string webplayerQuitURL = "http://google.com";
-#endif
-
-    public void Start()
+    public new void Start()
     {
-        FailMenuUI.gameObject.SetActive(false);
+        MenuCheck(FailMenuUI);
     }
 
     public void Update()
     {
-        OpenMenu();
+        ShowFailMenu();
     }
 
-    public void OpenMenu()
+    public void ShowFailMenu()
     {
+        if (menuAlreadyOpen) return;
+
+        if (Breakpoint.barrierIsBroken == false)
+        {
+            StartCoroutine(DelayFail(4f));
+        }
+    }
+
+    private IEnumerator DelayFail(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+
         if (FailMenuUI.activeSelf == false)
         {
-            if (Keyboard.current.qKey.wasPressedThisFrame)
-            {
-                FailMenuUI.gameObject.SetActive(true);
-            }
+            FailMenuUI.SetActive(true);
+            menuAlreadyOpen = true;
         }
-        else
-        {
-            if (Keyboard.current.qKey.wasPressedThisFrame)
-            {
-                FailMenuUI.gameObject.SetActive(false);
-            }
-        }
-    }
-
-    public void Resume()
-    {
-        FailMenuUI.gameObject.SetActive(false);
-    }
-
-
-    public void Retry()
-    {
-        int buildIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(buildIndex);
-    }
-
-    public void OnApplicationQuit()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#elif UNITY_WEBPLAYER
-        Application.OpenURL(webplayerQuitURL)
-#else
-        Application.Quit()
-#endif
+        
     }
 }
