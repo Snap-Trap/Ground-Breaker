@@ -19,6 +19,8 @@ public class FailMenu : MenuManager
     {
         if (menuAlreadyOpen) return;
 
+        if (!Breakpoint.barrierIsHit) return;
+
         if (Breakpoint.barrierIsBroken == false)
         {
             StartCoroutine(DelayFail(4f));

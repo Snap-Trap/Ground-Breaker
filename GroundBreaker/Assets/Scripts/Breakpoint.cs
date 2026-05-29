@@ -8,6 +8,7 @@ public class Breakpoint : MonoBehaviour
     private DataStore _store;
 
     public static bool barrierIsBroken;
+    public static bool barrierIsHit;
 
     private void Start()
     {

@@ -30,8 +30,8 @@ public class PauseMenu : MenuManager
         {
             if (Keyboard.current.qKey.wasPressedThisFrame)
             {
-                PauseMenuUI.gameObject.SetActive(true);
                 menuAlreadyOpen = true;
+                PauseMenuUI.gameObject.SetActive(true);
                 Time.timeScale = 0;
             }
         }
@@ -39,8 +39,8 @@ public class PauseMenu : MenuManager
         {
             if (Keyboard.current.qKey.wasPressedThisFrame)
             {
-                PauseMenuUI.gameObject.SetActive(false);
                 menuAlreadyOpen = false;
+                PauseMenuUI.gameObject.SetActive(false);
                 Time.timeScale = 1;
             }
         }
@@ -49,6 +49,7 @@ public class PauseMenu : MenuManager
     public void Resume()
     {
         PauseMenuUI.gameObject.SetActive(false);
+        menuAlreadyOpen = false;
     }
 
 
@@ -56,6 +57,7 @@ public class PauseMenu : MenuManager
     {
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(buildIndex);
+        menuAlreadyOpen = false;
     }
 
     public void OnApplicationQuit()
