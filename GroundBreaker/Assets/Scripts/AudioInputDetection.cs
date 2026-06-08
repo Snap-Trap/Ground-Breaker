@@ -35,7 +35,7 @@ public class AudioInputDetection : MonoBehaviour
         }
     }
 
-    // Zorgt ervoor dat de audio
+    // Zorgt ervoor dat de audio uhhhhhhhhhhhhhhhhhhhhhhhhhh
     public float GetLoudness()
     {
         if (microphoneClip == null) return 0f;

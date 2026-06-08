@@ -1,15 +1,11 @@
 using System.Collections;
 using UnityEngine;
 
-public class FailMenu : MenuManager
+public class FailMenu : MonoBehaviour
 {
-    public GameObject FailMenuUI;
+    public MenuManager menuManager;
 
-    public new void Start()
-    {
-        MenuCheck(FailMenuUI);
-    }
-
+    private bool FailTimerStarted;
     public void Update()
     {
         ShowFailMenu();
@@ -17,13 +13,15 @@ public class FailMenu : MenuManager
 
     public void ShowFailMenu()
     {
-        if (menuAlreadyOpen) return;
-
         if (!Breakpoint.barrierIsHit) return;
 
-        if (Breakpoint.barrierIsBroken == false)
+        if (!FailTimerStarted)
         {
-            StartCoroutine(DelayFail(4f));
+            if (Breakpoint.barrierIsBroken == false)
+            {
+                FailTimerStarted = true;
+                StartCoroutine(DelayFail(4f));
+            }
         }
     }
 
@@ -31,11 +29,6 @@ public class FailMenu : MenuManager
     {
         yield return new WaitForSeconds(waitTime);
 
-        if (FailMenuUI.activeSelf == false)
-        {
-            FailMenuUI.SetActive(true);
-            menuAlreadyOpen = true;
-        }
-        
+        menuManager.OpenFailMenu();
     }
 }

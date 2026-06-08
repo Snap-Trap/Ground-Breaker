@@ -3,61 +3,33 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
-public class PauseMenu : MenuManager
+public class PauseMenu : MonoBehaviour
 {
-    public GameObject PauseMenuUI;
+    public MenuManager menuManager;
 
     // Websites pakken dus wrs google
 #if UNITY_WEBPLAYER
     public static string webplayerQuitURL = "http://google.com";
 #endif
 
-    public new void Start()
-    {
-        MenuCheck(PauseMenuUI);
-    }
-
     public void Update()
     {
-        OpenMenu();
-    }
-
-    public void OpenMenu()
-    {
-        if (menuAlreadyOpen) return;
-
-        if (PauseMenuUI.activeSelf == false)
+        if (Keyboard.current.qKey.wasPressedThisFrame)
         {
-            if (Keyboard.current.qKey.wasPressedThisFrame)
-            {
-                menuAlreadyOpen = true;
-                PauseMenuUI.gameObject.SetActive(true);
-                Time.timeScale = 0;
-            }
-        }
-        else
-        {
-            if (Keyboard.current.qKey.wasPressedThisFrame)
-            {
-                menuAlreadyOpen = false;
-                PauseMenuUI.gameObject.SetActive(false);
-                Time.timeScale = 1;
-            }
+            menuManager.OpenPauseMenu();
         }
     }
 
     public void Resume()
     {
-        PauseMenuUI.gameObject.SetActive(false);
-        menuAlreadyOpen = false;
+        menuManager.ClosePauseMenu();
     }
-
 
     public void Retry()
     {
+        menuManager.ClosePauseMenu();
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(buildIndex);
-        menuAlreadyOpen = false;
     }
 
     public void OnApplicationQuit()

@@ -23,6 +23,8 @@ public class Breakpoint : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
+        barrierIsHit = true;
+
         if (_store.GetData<float>(PlayerMovement.SPEED_DATA) >= RequiredVelocity || _store.GetData<float>(PlayerMovement.SPEED_DATA) == RequiredVelocity)
         {
             barrierIsBroken = false;

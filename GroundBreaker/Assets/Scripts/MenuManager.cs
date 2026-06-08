@@ -1,16 +1,38 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MenuManager : MonoBehaviour
 {
-    public static bool menuAlreadyOpen;
+    public GameObject FailMenuUI;
+    public GameObject PauseMenuUI;
 
-    public void Start()
+    public bool MenuOpen => PauseMenuUI.activeSelf || FailMenuUI.activeSelf;
+
+    public void OpenPauseMenu()
     {
-        menuAlreadyOpen = false;
+        if (MenuOpen) return;
+
+        PauseMenuUI.SetActive(true);
+        Time.timeScale = 0;
     }
 
-    public void MenuCheck(GameObject menuObject)
+    public void OpenFailMenu()
     {
-        menuObject.gameObject.SetActive(false);
+        if (MenuOpen) return;
+
+        FailMenuUI.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void ClosePauseMenu()
+    {
+        PauseMenuUI.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void CloseFailMenu()
+    {
+        FailMenuUI.SetActive(false);
+        Time.timeScale = 1;
     }
 }

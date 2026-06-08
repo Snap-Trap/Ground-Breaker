@@ -208,7 +208,7 @@ Transform:
   m_GameObject: {fileID: 47825960}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1601,7 +1601,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1205698473}
-        m_TargetAssemblyTypeName: Failmenu, Assembly-CSharp
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: Resume
         m_Mode: 1
         m_Arguments:
@@ -2139,7 +2139,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41bb09c3cb96d244f86243eb27492ecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Failmenu
+  FailMenuUI: {fileID: 1400212501}
   PauseMenuUI: {fileID: 1198395233}
+  menuAlreadyOpen: 0
 --- !u!114 &1205698474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2153,6 +2155,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FailMenu
   FailMenuUI: {fileID: 1400212501}
+  PauseMenuUI: {fileID: 1198395233}
+  menuAlreadyOpen: 0
 --- !u!1 &1400212501
 GameObject:
   m_ObjectHideFlags: 0
@@ -2163,7 +2167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1400212502}
   m_Layer: 5
-  m_Name: FailMenu
+  m_Name: FailMenuUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
