@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Stuff for the sideways gyroscope movement
     public float sideSpeed;
+    public float EditorSpeed;
     public float maxVelocity;
 
     // Other
@@ -76,13 +77,18 @@ public class PlayerMovement : MonoBehaviour
         }
         
         rb.linearVelocity = new Vector2(tilt * sideSpeed, rb.linearVelocity.y);
+
+#if UNITY_EDITOR
+        if (Keyboard.current.leftArrowKey.isPressed)
+        {
+            rb.linearVelocity = new Vector2(-EditorSpeed * sideSpeed, rb.linearVelocity.y);
+        }
+        if (Keyboard.current.rightArrowKey.isPressed)
+        {
+            rb.linearVelocity = new Vector2(EditorSpeed * sideSpeed, rb.linearVelocity.y);
+        }
+#endif
     }
-
-    //private Quaternion GyroToUnity(Quaternion q)
-    //{
-    //    return new Quaternion(q.x, q.y, -q.z, -q.w);
-    //}
-
     IEnumerator StartGyro()
     {
         Input.gyro.enabled = true;

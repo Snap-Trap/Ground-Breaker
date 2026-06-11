@@ -1,9 +1,12 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class FailMenu : MonoBehaviour
 {
     public MenuManager menuManager;
+
+    public TextMeshProUGUI failText;
 
     private bool FailTimerStarted;
     public void Update()
@@ -13,11 +16,11 @@ public class FailMenu : MonoBehaviour
 
     public void ShowFailMenu()
     {
-        if (!Breakpoint.barrierIsHit) return;
+        if (!PlayerBarrierCheck.barrierIsHit) return;
 
         if (!FailTimerStarted)
         {
-            if (Breakpoint.barrierIsBroken == false)
+            if (PlayerBarrierCheck.barrierIsBroken == false)
             {
                 FailTimerStarted = true;
                 StartCoroutine(DelayFail(4f));
