@@ -5,8 +5,9 @@ public class MenuManager : MonoBehaviour
 {
     public GameObject FailMenuUI;
     public GameObject PauseMenuUI;
+    public GameObject WinMenuUI;
 
-    public bool MenuOpen => PauseMenuUI.activeSelf || FailMenuUI.activeSelf;
+    public bool MenuOpen => PauseMenuUI.activeSelf || FailMenuUI.activeSelf || WinMenuUI.activeSelf;
 
     public void OpenPauseMenu()
     {
@@ -24,6 +25,14 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
+    public void OpenWinMenu()
+    {
+        if (MenuOpen) return;
+
+        WinMenuUI.SetActive(true);
+        Time.timeScale = 0;
+    }
+
     public void ClosePauseMenu()
     {
         PauseMenuUI.SetActive(false);
@@ -33,6 +42,12 @@ public class MenuManager : MonoBehaviour
     public void CloseFailMenu()
     {
         FailMenuUI.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void CloseWinMenu()
+    {
+        WinMenuUI.SetActive(false);
         Time.timeScale = 1;
     }
 }

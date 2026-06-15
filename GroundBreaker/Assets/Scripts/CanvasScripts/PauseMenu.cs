@@ -18,6 +18,14 @@ public class PauseMenu : MonoBehaviour
         {
             menuManager.OpenPauseMenu();
         }
+
+        if (menuManager.MenuOpen)
+        {
+            if (Keyboard.current.qKey.wasPressedThisFrame)
+            {
+                menuManager.ClosePauseMenu();
+            }
+        }
     }
 
     public void Resume()

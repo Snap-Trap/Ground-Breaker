@@ -42,13 +42,13 @@ public class PlayerBarrierCheck : MonoBehaviour
 
             if (playerSpeed >= RequiredVelocity || playerSpeed == RequiredVelocity)
             {
-                Debug.Log("The player had enough speed, it was: " + playerSpeed);
+                // Debug.Log("The player had enough speed, it was: " + playerSpeed);
                 barrierIsBroken = true;
                 Destroy(Barrier);
             }
             else
             {
-                Debug.Log("Unfortunately, the player did not reach the speed treshold" + playerSpeed);
+                // Debug.Log("Unfortunately, the player did not reach the speed treshold" + playerSpeed);
             }
         }
     } 
