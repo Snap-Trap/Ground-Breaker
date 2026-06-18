@@ -31,7 +31,8 @@ public class WinMenu : MonoBehaviour
         WinCheck.playerInWinbox = false;
         menuManager.CloseWinMenu();
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(++buildIndex);
+        LevelLockCheck.NextLevelToUnlock = ++buildIndex;
+        SceneManager.LoadScene(buildIndex);
     }
 
     private IEnumerator DelayWinScreen()
