@@ -28,7 +28,7 @@ public class WinMenu : MonoBehaviour
 
     public void NextLevel()
     {
-        WinCheck.playerInWinbox = false;
+        WinCheck.playerInWinbox = false ? true : false;
         menuManager.CloseWinMenu();
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
         LevelLockCheck.NextLevelToUnlock = ++buildIndex;

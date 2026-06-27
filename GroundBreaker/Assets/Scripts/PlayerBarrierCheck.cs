@@ -18,8 +18,6 @@ public class PlayerBarrierCheck : MonoBehaviour
     public void Start()
     {
         barrierLayer = LayerMask.GetMask("barrierLayer");
-        Barrier = GameObject.Find("Barrier");
-
         _store = FindFirstObjectByType<DataStore>();
     }
     public void Update()
@@ -48,7 +46,7 @@ public class PlayerBarrierCheck : MonoBehaviour
             }
             else
             {
-                // Debug.Log("Unfortunately, the player did not reach the speed treshold" + playerSpeed);
+                // Debug.Log("Unfortunately, the player did not reach the speed treshold :(" + playerSpeed);
             }
         }
     } 

@@ -8,7 +8,7 @@ public class FailMenu : MonoBehaviour
 
     public TextMeshProUGUI failText;
 
-    private bool FailTimerStarted;
+    [SerializeField] private bool FailTimerStarted;
     public void Update()
     {
         ShowFailMenu();
