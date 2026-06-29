@@ -1,5 +1,5 @@
-using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerBarrierCheck : MonoBehaviour
 {
@@ -31,10 +31,10 @@ public class PlayerBarrierCheck : MonoBehaviour
         }
         else
         {
-            Debug.Log("Player is not hitting ANYTHING at all, scrub");
+            // Debug.Log("Player is not hitting ANYTHING at all, scrub");
         }
 
-        if (barrierIsHit == true)
+        if (barrierIsHit && !barrierIsBroken)
         {
             float playerSpeed = _store.GetData<float>(PlayerMovement.SPEED_DATA);
 
@@ -49,6 +49,22 @@ public class PlayerBarrierCheck : MonoBehaviour
                 // Debug.Log("Unfortunately, the player did not reach the speed treshold :(" + playerSpeed);
             }
         }
-    } 
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += ResetBarrierState;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= ResetBarrierState;
+    }
+
+    private static void ResetBarrierState(Scene scene, LoadSceneMode mode)
+    {
+        barrierIsBroken = false;
+        barrierIsHit = false;
+    }
 }
 

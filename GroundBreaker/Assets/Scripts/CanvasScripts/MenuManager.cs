@@ -9,6 +9,11 @@ public class MenuManager : MonoBehaviour
 
     public bool MenuOpen => PauseMenuUI.activeSelf || FailMenuUI.activeSelf || WinMenuUI.activeSelf;
 
+    private void Awake()
+    {
+        Time.timeScale = 1;
+    }
+
     public void OpenPauseMenu()
     {
         if (MenuOpen) return;
