@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public const string SPEED_DATA = "speed";
 
     private DataStore _store;
+    private PlayerCollide playerCollide;
 
     // Stuff for the microphone upwards movement
     private AudioInputDetection audioInputDetection;
@@ -21,6 +22,9 @@ public class PlayerMovement : MonoBehaviour
     public float EditorSpeed;
     public float maxVelocity;
 
+    public float speedRampUp = 5f;
+    public float speedRampDown = 25f;
+
     // Other
     public float currentVelocity;
 
@@ -28,6 +32,8 @@ public class PlayerMovement : MonoBehaviour
     {
         Input.gyro.enabled = true;
         Input.compensateSensors = true;
+        
+        playerCollide = GetComponent<PlayerCollide>();
     }
 
     public void Start()
@@ -62,6 +68,8 @@ public class PlayerMovement : MonoBehaviour
         currentVelocity = rb.linearVelocity.magnitude;
         _store.SetData<float>(SPEED_DATA, currentVelocity);
 
+        if (!playerCollide.CanMove) return;
+
         MicrophoneMovement();
         GyroscopeMovement();
     }
@@ -76,18 +84,23 @@ public class PlayerMovement : MonoBehaviour
             tilt = 0f;
         }
         
-        rb.linearVelocity = new Vector2(tilt * sideSpeed, rb.linearVelocity.y);
-
+        float targetVelocity = tilt * sideSpeed;
 #if UNITY_EDITOR
         if (Keyboard.current.leftArrowKey.isPressed)
         {
-            rb.linearVelocity = new Vector2(-EditorSpeed * sideSpeed, rb.linearVelocity.y);
+            targetVelocity = -EditorSpeed * sideSpeed;
         }
         if (Keyboard.current.rightArrowKey.isPressed)
         {
-            rb.linearVelocity = new Vector2(EditorSpeed * sideSpeed, rb.linearVelocity.y);
+            targetVelocity = -EditorSpeed * sideSpeed;
         }
 #endif
+        
+        float rate = (Mathf.Abs(targetVelocity) > 0.01f) ? speedRampUp : speedRampDown;
+
+        float newX = Mathf.MoveTowards(rb.linearVelocity.x, targetVelocity, rate * Time.deltaTime);
+
+        rb.linearVelocity = new Vector2(newX, rb.linearVelocity.y);
     }
     IEnumerator StartGyro()
     {

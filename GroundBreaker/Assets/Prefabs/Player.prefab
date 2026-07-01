@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3526825484101140350}
   - component: {fileID: 3049280331785049205}
   - component: {fileID: 7675807785643933666}
+  - component: {fileID: 2060128642523259063}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -206,6 +207,21 @@ MonoBehaviour:
   RequiredVelocity: 1
   raycastDistance: 2
   Barrier: {fileID: 0}
+--- !u!114 &2060128642523259063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353653011805842078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b72bc06c88aecc4bab33b2c1ab98358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCollide
+  stunDuration: 1
+  raycastDistance: 1.5
+  CanMove: 1
 --- !u!1 &7551179275988016475
 GameObject:
   m_ObjectHideFlags: 0
