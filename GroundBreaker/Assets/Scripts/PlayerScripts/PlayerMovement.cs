@@ -94,6 +94,11 @@ public class PlayerMovement : MonoBehaviour
         {
             targetVelocity = -EditorSpeed * sideSpeed;
         }
+
+        if (currentVelocity > maxVelocity)
+        {
+            currentVelocity = maxVelocity;
+        }
 #endif
         
         float rate = (Mathf.Abs(targetVelocity) > 0.01f) ? speedRampUp : speedRampDown;

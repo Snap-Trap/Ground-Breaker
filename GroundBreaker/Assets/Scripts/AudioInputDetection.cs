@@ -16,7 +16,7 @@ public class AudioInputDetection : MonoBehaviour
     {
         if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
         {
-            // Luca: ShouldShowRequest doet dus die message die je wat meer info geeft voor WAAROM, gebruik deze inplaats van de normale request
+            // ShouldShowRequest doet dus die message die je wat meer info geeft voor WAAROM, gebruik deze inplaats van de normale request
             if (Permission.ShouldShowRequestPermissionRationale(Permission.Microphone))
             {
                 Debug.Log("This super cool awesome game uses your microphone for the movement, please allow.");
