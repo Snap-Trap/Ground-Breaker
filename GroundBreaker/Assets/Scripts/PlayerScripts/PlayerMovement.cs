@@ -21,12 +21,13 @@ public class PlayerMovement : MonoBehaviour
     public float sideSpeed;
     public float EditorSpeed;
     public float maxVelocity;
-
+    public float currentVelocity;
     public float speedRampUp = 5f;
     public float speedRampDown = 25f;
 
     // Other
-    public float currentVelocity;
+    public static bool micDisabled;
+    public bool canMove;
 
     void Awake()
     {
@@ -67,8 +68,9 @@ public class PlayerMovement : MonoBehaviour
     {
         currentVelocity = rb.linearVelocity.magnitude;
         _store.SetData<float>(SPEED_DATA, currentVelocity);
-
+        
         if (!playerCollide.CanMove) return;
+        if (!canMove) return;
 
         MicrophoneMovement();
         GyroscopeMovement();
@@ -92,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Keyboard.current.rightArrowKey.isPressed)
         {
-            targetVelocity = -EditorSpeed * sideSpeed;
+            targetVelocity = EditorSpeed * sideSpeed;
         }
 
         if (currentVelocity > maxVelocity)
@@ -118,6 +120,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void MicrophoneMovement()
     {
+        if (micDisabled) return;
 #if UNITY_EDITOR
         if (Keyboard.current.spaceKey.isPressed)
         {

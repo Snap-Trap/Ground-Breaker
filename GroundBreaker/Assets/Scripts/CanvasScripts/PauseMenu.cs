@@ -35,6 +35,8 @@ public class PauseMenu : MonoBehaviour
 
     public void Retry()
     {
+        WinCheck.playerInWinbox = false;
+        PlayerMovement.micDisabled = false;
         menuManager.ClosePauseMenu();
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(buildIndex);

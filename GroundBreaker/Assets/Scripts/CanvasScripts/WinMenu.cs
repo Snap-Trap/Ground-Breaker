@@ -16,7 +16,7 @@ public class WinMenu : MonoBehaviour
     }
 
     public void StartWinMenu()
-{
+    {
         if (WinCheck.playerInWinbox)
         {
             if (!WinTimerStarted)
@@ -28,6 +28,7 @@ public class WinMenu : MonoBehaviour
 
     public void NextLevel()
     {
+        PlayerMovement.micDisabled = false;
         WinCheck.playerInWinbox = false;
         menuManager.CloseWinMenu();
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
