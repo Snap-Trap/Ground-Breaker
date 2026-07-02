@@ -187,13 +187,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   loudnessThreshold: 0.01
-  launchSpeed: 30
-  sideSpeed: 12
+  launchSpeed: 100
+  sideSpeed: 24
   EditorSpeed: 1
-  maxVelocity: 30
+  maxVelocity: 20
   currentVelocity: 0
   speedRampUp: 15
-  speedRampDown: 8
+  speedRampDown: 6
   canMove: 0
 --- !u!114 &7675807785643933666
 MonoBehaviour:
